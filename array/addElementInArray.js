@@ -9,7 +9,6 @@ numbers[0] = -1;
 
 // 方法二：
 // numbers.unshift(-1);
-console.log(numbers);
 
 /* 把元素插入数组的结尾 */
 var numbers = [0,1,2,3,4,5,6,7,8,9];
@@ -17,3 +16,6 @@ var numbers = [0,1,2,3,4,5,6,7,8,9];
 numbers.push(10);
 // 方法二：
 numbers[numbers.length] = 10;
+
+// 查看更改结果：
+console.log(numbers);
