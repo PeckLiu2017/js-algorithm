@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>任何进制转化成二进制</title>
+</head>
+
+<body>
+  <script src='stack.js'></script>
+  <script type="text/javascript">
+    function baseConverter(decNumber, base) {
+      var remStack = new Stack(),
+        rem,
+        baseString = '',
+        digits = '0123456789ABCDEF'; //{6}
+
+      while (decNumber > 0) {
+        rem = Math.floor(decNumber % base);
+        remStack.push(rem);
+        decNumber = Math.floor(decNumber / base);
+      }
+
+      while (!remStack.isEmpty()) {
+        baseString += digits[remStack.pop()]; //{7}
+      }
+      return baseString;
+    }
+
+    console.log(baseConverter(100345, 2)); //输出11000011111111001
+    console.log(baseConverter(10, 2)); //输出1010
+    console.log(baseConverter(100345, 8)); //输出303771
+    console.log(baseConverter(100345, 16)); //输出187F9
+    console.log(baseConverter(33, 16)); //输出21
+  </script>
+</body>
+
+</html>
