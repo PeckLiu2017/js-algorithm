@@ -31,19 +31,19 @@ function Stack() { //各种属性和方法的声明
 }
 
 
-var stack = new Stack();
-console.log(stack.isEmpty()); // true
-
-stack.push(5);
-stack.push(8);
-console.log(stack.peek()); //输出 8
-
-stack.push(11);
-console.log(stack.size()); //输出3
-console.log(stack.isEmpty()); //输出false
-
-stack.push(15);
-stack.pop();
-stack.pop();
-console.log(stack.size()); //输出2
-stack.print(); //输出 5, 8
+// var stack = new Stack();
+// console.log(stack.isEmpty()); // true
+//
+// stack.push(5);
+// stack.push(8);
+// console.log(stack.peek()); //输出 8
+//
+// stack.push(11);
+// console.log(stack.size()); //输出3
+// console.log(stack.isEmpty()); //输出false
+//
+// stack.push(15);
+// stack.pop();
+// stack.pop();
+// console.log(stack.size()); //输出2
+// stack.print(); //输出 5, 8
