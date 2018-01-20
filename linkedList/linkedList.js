@@ -8,39 +8,131 @@
 // 另一个重要的点是，我们还需要存储第一个节点的引用
 // 为此，可以把这个引用存储在一个 称为head的变量中(行{3})
 function LinkedList() {
-  var Node = function(element) { // {1}
+  let Node = function(element) { // {1}
     this.element = element;
     this.next = null;
   };
-  var length = 0; // {2}
-  var head = null; // {3}
+  let length = 0; // {2}
+  let head = null; // {3}
+
   this.append = function(element) {
-    var node = new Node(element), //{1}
-      current; //{2}
-    if (head === null) { //列表中第一个节点 //{3}
-      head = node;
+
+    let node = new Node(element),
+      current; // 指向列表中 current项的变量
+
+    if (head === null) { //如果链列表中没有节点
+      head = node; // 把它赋值为 head
     } else {
-      current = head; //{4}
-      //循环列表，直到找到最后一项
+
+      current = head;
+
+      //loop the list until find last item
       while (current.next) {
-        current = current.next;
+        current = current.next; // 当current.next元素为null时，我们就知道当前已经到达列表尾部了
       }
-      //找到最后一项，将其next赋为node，建立链接
-      current.next = node; //{5}
+
+      //get last item and assign next to added item to make the link
+      current.next = node; // 然后要做的就是让当前(也就是最后一个)元素的next指针指向想要添加到列表的节点,也就是将新元素加入链表
     }
-    length++; //更新列表的长度 //{6}
+
+    length++; //更新列表的长度
   };
-  this.insert = function(position, element) {};
-  this.removeAt = function(position) {};
-  this.remove = function(element) {};
-  this.indexOf = function(element) {};
-  this.isEmpty = function() {};
-  this.size = function() {};
+
+  this.insert = function(position, element) {
+
+    //check for out-of-bounds values
+    if (position >= 0 && position <= length) {
+
+      let node = new Node(element),
+        current = head,
+        previous,
+        index = 0;
+
+      if (position === 0) { //add on first position
+
+        node.next = current;
+        head = node;
+
+      } else {
+        while (index++ < position) {
+          previous = current;
+          current = current.next;
+        }
+        node.next = current;
+        previous.next = node;
+      }
+
+      length++; //update size of list
+
+      return true;
+
+    } else {
+      return false;
+    }
+  };
+
+  this.removeAt = function(position) {
+
+    //check for out-of-bounds values
+    if (position > -1 && position < length) {
+
+      let current = head,
+        previous,
+        index = 0;
+
+      //removing first item
+      if (position === 0) {
+        head = current.next;
+      } else {
+
+        while (index++ < position) {
+
+          previous = current;
+          current = current.next;
+        }
+
+        //link previous with current's next - skip it to remove
+        previous.next = current.next;
+      }
+
+      length--;
+
+      return current.element;
+
+    } else {
+      return null;
+    }
+  };
+  this.remove = function(element) {
+
+    let index = this.indexOf(element);
+    return this.removeAt(index);
+  };
+
+  this.indexOf = function(element) {
+    let current = head,
+      index = 0;
+
+    while (current) {
+      if (element === current.element) {
+        return index;
+      }
+      index++;
+      current = current.next;
+    }
+    return -1;
+  };
+  this.isEmpty = function() {
+    return length === 0; // 这里不用 if
+  };
+  this.size = function() {
+    return length;
+  };
   this.toString = function() {
-    var current = head, //{1}
+    let current = head, //{1}
       string = ''; //{2}
     while (current) { //{3}
-      string = current.element; //{4}
+      string += current.element; //{4}
       current = current.next; //{5}
     }
     return string; //{6}
@@ -48,6 +140,12 @@ function LinkedList() {
   this.print = function() {};
 }
 
-var list = new LinkedList();
+let list = new LinkedList();
 list.append(15);
 list.append(10);
+console.log(list.toString());
+console.log(list.size());
+console.log(list.isEmpty());
+console.log(list.indexOf(10));
+console.log(list.indexOf(15));
+console.log(list.indexOf(100));
