@@ -38,31 +38,32 @@ function LinkedList() {
     length++; //更新列表的长度
   };
 
+  // 这里画一个链表的图比较简单易懂些
   this.insert = function(position, element) {
 
     //check for out-of-bounds values
     if (position >= 0 && position <= length) {
 
       let node = new Node(element),
-        current = head,
-        previous,
+        current = head, // 先得到头部指针
+        previous, // 用来记录上一个的位置
         index = 0;
 
       if (position === 0) { //add on first position
 
-        node.next = current;
-        head = node;
+        node.next = current; // 先储存指针
+        head = node; // 再赋值
 
-      } else {
+      } else { // 比如想要在第二个位置加上一个元素
         while (index++ < position) {
-          previous = current;
-          current = current.next;
+          previous = current; // 一开始 previous 变成了 head
+          current = current.next; // 移动指针 current 到了索引为 1 的地方，值为 null
         }
-        node.next = current;
-        previous.next = node;
+        node.next = current; // 先储存指针
+        previous.next = node; // 再赋值
       }
 
-      length++; //update size of list
+      length++; //更新列表的长度
 
       return true;
 
@@ -79,23 +80,24 @@ function LinkedList() {
       let current = head,
         previous,
         index = 0;
+        // current = head, previous = undefined, index = 0
 
-      //removing first item
+      //如果是第一个元素，就移除第一个
       if (position === 0) {
         head = current.next;
       } else {
-
+        // 如果不是，就用 index++ 取下一个元素
         while (index++ < position) {
 
-          previous = current;
+          previous = current; // 一开始 previous 变成了 head，随后是不同值的 current
           current = current.next;
         }
 
-        //link previous with current's next - skip it to remove
+        // 把 current.next 变成了 previous.next
         previous.next = current.next;
       }
 
-      length--;
+      length--; // 减小链表长度
 
       return current.element;
 
@@ -104,7 +106,7 @@ function LinkedList() {
     }
   };
   this.remove = function(element) {
-
+    // 先找到索引，然后根据元素的索引删除元素
     let index = this.indexOf(element);
     return this.removeAt(index);
   };
@@ -114,13 +116,13 @@ function LinkedList() {
       index = 0;
 
     while (current) {
-      if (element === current.element) {
+      if (element === current.element) { // 如果元素在链表头部，直接返回的 index 为 0
         return index;
       }
-      index++;
-      current = current.next;
+      index++; // 否则 index++
+      current = current.next; // 移动指针
     }
-    return -1;
+    return -1; // 找不到的话返回 -1
   };
   this.isEmpty = function() {
     return length === 0; // 这里不用 if
@@ -129,7 +131,7 @@ function LinkedList() {
     return length;
   };
   this.toString = function() {
-    let current = head, //{1}
+    let current = head, // 先得到头部指针
       string = ''; //{2}
     while (current) { //{3}
       string += current.element; //{4}
@@ -143,9 +145,12 @@ function LinkedList() {
 let list = new LinkedList();
 list.append(15);
 list.append(10);
-console.log(list.toString());
-console.log(list.size());
-console.log(list.isEmpty());
-console.log(list.indexOf(10));
-console.log(list.indexOf(15));
-console.log(list.indexOf(100));
+list.append(100);
+console.log(list.toString()); // 1510100
+console.log(list.size()); // 3
+console.log(list.isEmpty()); // false
+console.log(list.indexOf(10)); // 1
+console.log(list.indexOf(15)); // 0
+console.log(list.indexOf(100)); // 2
+list.removeAt(0);
+console.log(list.toString()); // 10100
