@@ -51,7 +51,7 @@ function LinkedList() {
 
       if (position === 0) { //add on first position
 
-        node.next = current; // 先储存指针
+        node.next = current; // 先储存指针,node.next 连接以前 head 
         head = node; // 再赋值
 
       } else { // 比如想要在第二个位置加上一个元素
