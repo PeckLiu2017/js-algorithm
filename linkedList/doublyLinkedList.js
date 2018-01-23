@@ -83,6 +83,40 @@ function DoublyLinkedList() {
     }
   };
 
+  this.removeAt = function(position) {
+
+    //check for out-of-bounds values
+    if (position > -1 && position < length) {
+
+      let current = head, // 用 current 来储存将要操作的元素
+        previous, // previous 和 next 来连接链表中的元素，作为指针
+        index = 0; // index 从零开始，可以在下面将 previous 赋值为 current 也就是 head
+
+      //removing first item
+      if (position === 0) {
+        head = current.next;
+      } else {
+        // 首先要找到那个元素
+        // 把那个元素删掉
+        while (index++ < position) {
+
+          previous = current; // 一次循环之后 previous 变成 current
+          current = current.next; // current 变成下个 元素
+        }
+
+        //link previous with current's next - skip it to remove
+        previous.next = current.next; // 通过解除指针链接来删除元素，上一个元素的指针链接直接和下一个元素，下个元素的指针也直接指向上个元素
+      }
+
+      length--; // 更新长度
+
+      return current.element;
+
+    } else {
+      return null;
+    }
+  };
+
   this.toString = function() {
     // 基本分析思路都是如果有一个元素或有多个元素应该怎么样
     // 如果一个元素也没有就不用输出
