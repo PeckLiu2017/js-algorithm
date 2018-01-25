@@ -100,7 +100,7 @@ function DoublyLinkedList() {
         // 把那个元素删掉
         while (index++ < position) {
 
-          previous = current; // 一次循环之后 previous 变成 current
+          previous = current; // 一次循环之后 previous 变成 current,而且 previous 是从第一个元素 head 开始的
           current = current.next; // current 变成下个 元素
         }
 
