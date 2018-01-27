@@ -58,7 +58,7 @@ function Map() {
   }
 }
 
-var map = new Map();
+let map = new Map();
 
 map.set('Gandalf', 'gandalf@email.com');
 map.set('John', 'johnsnow@email.com');
