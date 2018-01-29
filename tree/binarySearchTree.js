@@ -42,6 +42,7 @@ function BinarySearchTree() {
     }
   };
 
+  // 中序遍历
   this.inOrderTraverse = function(callback) {
     inOrderTraverseNode(root, callback);
   };
@@ -56,6 +57,20 @@ function BinarySearchTree() {
       inOrderTraverseNode(node.right, callback);
     }
   };
+
+  // 先序遍历
+  this.preOrderTraverse = function(callback) {
+    preOrderTraverseNode(root, callback);
+  };
+
+  var preOrderTraverseNode = function(node, callback) {
+    if (node !== null) {
+      callback(node.key);
+      preOrderTraverseNode(node.left, callback);
+      preOrderTraverseNode(node.right, callback);
+    }
+  };
+
 
 }
 
@@ -75,6 +90,13 @@ tree.insert(14);
 tree.insert(20);
 tree.insert(18);
 tree.insert(25);
+tree.insert(6);
+
+tree.insert(4);
+tree.insert(1);
+tree.insert(2);
+tree.insert(3);
+tree.insert(5);
 tree.insert(6);
 
 console.log('********* in-order transverse ***********');
