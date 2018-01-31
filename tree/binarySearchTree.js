@@ -63,7 +63,7 @@ function BinarySearchTree() {
     preOrderTraverseNode(root, callback);
   };
 
-  var preOrderTraverseNode = function(node, callback) {
+  let preOrderTraverseNode = function(node, callback) {
     if (node !== null) {
       callback(node.key);
       preOrderTraverseNode(node.left, callback);
@@ -76,7 +76,7 @@ function BinarySearchTree() {
   };
 
   // 后续遍历
-  var postOrderTraverseNode = function(node, callback) {
+  let postOrderTraverseNode = function(node, callback) {
     if (node !== null) {
       postOrderTraverseNode(node.left, callback);
       postOrderTraverseNode(node.right, callback);
@@ -84,7 +84,60 @@ function BinarySearchTree() {
     }
   };
 
+  // 找最小值
+  this.min = function() {
+    return minNode(root);
+  };
 
+  let minNode = function(node) {
+    if (node) {
+      while (node && node.left !== null) {
+        node = node.left;
+      }
+
+      return node.key;
+    }
+    return null;
+  };
+
+  // 找最大值
+  this.max = function() {
+    return maxNode(root);
+  };
+
+  let maxNode = function(node) {
+    if (node) {
+      while (node && node.right !== null) {
+        node = node.right;
+      }
+
+      return node.key;
+    }
+    return null;
+  };
+
+  // 搜索
+  this.search = function(key) {
+
+    return searchNode(root, key);
+  };
+
+  var searchNode = function(node, key) {
+
+    if (node === null) {
+      return false;
+    }
+
+    if (key < node.key) {
+      return searchNode(node.left, key);
+
+    } else if (key > node.key) {
+      return searchNode(node.right, key);
+
+    } else {
+      return true; // 最后返回 true，说明包含这个元素
+    }
+  };
 }
 
 let tree = new BinarySearchTree();
@@ -124,3 +177,9 @@ tree.preOrderTraverse(printNode);
 
 console.log('********* post-order transverse ***********');
 tree.postOrderTraverse(printNode);
+
+console.log('********* max and min ***********');
+console.log(tree.max());
+console.log(tree.min());
+console.log(tree.search(1) ? 'Key 1 found.' : 'Key 1 not found.');
+console.log(tree.search(8) ? 'Key 8 found.' : 'Key 8 not found.');
