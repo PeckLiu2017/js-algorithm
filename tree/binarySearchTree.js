@@ -122,7 +122,7 @@ function BinarySearchTree() {
     return searchNode(root, key);
   };
 
-  var searchNode = function(node, key) {
+  let searchNode = function(node, key) {
 
     if (node === null) {
       return false;
@@ -137,6 +137,70 @@ function BinarySearchTree() {
     } else {
       return true; // 最后返回 true，说明包含这个元素
     }
+  };
+
+  // root被赋值为removeNode方法的返回值
+  this.remove = function(key) {
+    root = removeNode(root, key); //{1}
+  };
+
+  let removeNode = function(node, element) {
+
+    if (node === null) {
+      return null;
+    }
+
+    if (element < node.key) { // 1.键 < node.key
+      node.left = removeNode(node.left, element); // 更新了节点左指针的值
+      return node; // 更新了节点左右指针的值
+
+    } else if (element > node.key) { // 2.键 > node.key
+      node.right = removeNode(node.right, element); // 更新了节点右指针的值
+      return node; // 更新了节点左右指针的值
+
+    } else { // 3.键等于node.key
+
+      //第一种情况——一个叶节点
+      //给这个节点赋予null值来移除它的指针
+      if (node.left === null && node.right === null) {
+        node = null;
+        return node;
+      }
+
+      //第二种情况——一个只有一个子节点的节点
+      //如果这个节点没有左侧子节点
+      //也就是说它有一个右侧子节点
+      //因此我们把对它的引用改为对它右侧子节点的引用并返回更新后的节点
+      if (node.left === null) {
+        node = node.right;
+        return node;
+
+      } else if (node.right === null) {
+        node = node.left;
+        return node;
+      }
+
+      // 第三种情况——一个有两个子节点的节点
+      // 当找到了需要移除的节点后，需要找到它右边子树中最小的节点
+      let aux = findMinNode(node.right);
+      node.key = aux.key;
+      // 继续把右侧子树中的最小节点移除，毕竟它已经被移至要移除的节点的位置了
+      node.right = removeNode(node.right, aux.key);
+      // 最后，向它的父节点返回更新后节点的引用
+      return node;
+    }
+  };
+
+  // 当找到了需要移除的节点后，需要找到它右边子树中最小的节点
+  // 用它右侧子树中最小节点的键去更新这个节点的值
+  // 通过这一步，我们改变了这个节点的键，也就是说它被移除了
+
+  let findMinNode = function(node) {
+    while (node && node.left !== null) {
+      node = node.left;
+    }
+
+    return node;
   };
 }
 
